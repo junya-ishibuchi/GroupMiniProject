@@ -89,11 +89,15 @@ public class GameLogic {
 
     private void printPossibleMove() {
         //todo: sena
+
+        // You can use printPossibleMove method. Check the entire board with a loop statement.
     }
 
     private void printPossibleMove(String from) {
         //todo: sena
         //from is suppose to be "a4" or "b7". length = 2.
+
+        // You may use a loop statement like for. And find out where you can go and make the string.
     }
 
     private void move(String uci) {
@@ -101,6 +105,17 @@ public class GameLogic {
         //like this
 //        Position from = this.uci.getPositionFromUci(uci.substring(0, 2));
 //        Position to = this.uci.getPositionFromUci(uci.substring(2, 4));
+//
+//        Piece targetPiece = board[from.getRow()][from.getCol()];
+//        // Gabo, LOOK AT THE CONDITION.
+//        if (targetPiece.isValidMove(to)) {
+//            board[to.getRow()][to.getCol()] = targetPiece;
+//            targetPiece.setPosition(to);
+//        } else {
+//            System.out.println("Invalid move");
+//        }
+        // You have to consider about white turn or not... plz write the code.
+        // You have to consider about whether the pawn can take the enemy's piece or not... plz write the code.
     }
 
     private void printInvalidInput() {
