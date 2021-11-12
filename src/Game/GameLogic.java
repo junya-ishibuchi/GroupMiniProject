@@ -7,16 +7,17 @@ import Potision.Uci;
 import java.util.Scanner;
 
 public class GameLogic {
-    private Piece[][] board;
-    private Scanner scanner;
-    private Uci uci;
+    private final Piece[][] board;
+    private final Scanner scanner;
+    private final Uci uci;
     private boolean isGameOver;
     private boolean whiteTurn;
 
     public GameLogic() {
-        Scanner scanner = new Scanner(System.in);
+        this.scanner = new Scanner(System.in);
         this.board = new Piece[8][8];
-        Uci uci = new Uci(8);
+        this.uci = new Uci(8);
+        this.isGameOver = false;
         this.init();
     }
 

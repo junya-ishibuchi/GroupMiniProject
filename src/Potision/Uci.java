@@ -1,6 +1,7 @@
 package Potision;
 
 public class Uci {
+    final int ALPHABET_A_NUM = 97;
     private int size;
 
     public Uci(int size) {
@@ -8,14 +9,23 @@ public class Uci {
     }
 
     public boolean validate(String uci) {
-        //todo
-        //uci is suppose to be "a4" or "b7". length = 2.
+        if (uci.length() > 2) {
+            return false;
+        }
+        int[] lineRow = convertToNum(uci);
 
-        return true;
+        return lineRow[0] >= 0 && lineRow[1] >=0 && lineRow[0] <= size && lineRow[1] <= size;
     }
 
     public Position getPositionFromUci(String uci) {
-        //TODO
-        return new Position(0, 0);
+        int[] lineRow = convertToNum(uci);
+        return new Position(lineRow[0], lineRow[1]);
+    }
+
+    private int[] convertToNum(String uci) {
+        int line = uci.charAt(0) - ALPHABET_A_NUM;
+        int row = Character.getNumericValue(uci.charAt(1));
+
+        return new int[]{line, row};
     }
 }
