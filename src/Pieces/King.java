@@ -2,7 +2,7 @@ package Pieces;
 
 import Potision.Position;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 
 public class King extends Piece{
 
@@ -41,6 +41,44 @@ public class King extends Piece{
     }
 
 
+
+    public void intoCastle(Position newPosition, Piece[][] board){
+        if(newPosition.getRow() == 0 && newPosition.getCol() == 1) {
+            board[this.position.getRow()][this.position.getCol()] = null;
+            this.position = newPosition;
+            board[newPosition.getRow()][newPosition.getCol()] = this;
+            Piece rw1 = board[0][0];
+            rw1.position = new Position(0, 2);
+            board[0][0] = null;
+            board[0][2] = rw1;
+        } else if(newPosition.getRow() == 0 && newPosition.getCol() == 6) {
+            board[this.position.getRow()][this.position.getCol()] = null;
+            this.position = newPosition;
+            board[newPosition.getRow()][newPosition.getCol()] = this;
+            Piece rw2 = board[0][7];
+            rw2.position = new Position(0, 5);
+            board[0][7] = null;
+            board[0][5] = rw2;
+        } else if(newPosition.getRow() == 7 && newPosition.getCol() == 1) {
+            board[this.position.getRow()][this.position.getCol()] = null;
+            this.position = newPosition;
+            board[newPosition.getRow()][newPosition.getCol()] = this;
+            Piece rb1 = board[7][0];
+            rb1.position = new Position(7, 2);
+            board[7][0] = null;
+            board[7][2] = rb1;
+        } else if(newPosition.getRow() == 7 && newPosition.getCol() == 6) {
+            board[this.position.getRow()][this.position.getCol()] = null;
+            this.position = newPosition;
+            board[newPosition.getRow()][newPosition.getCol()] = this;
+            Piece rb2 = board[7][7];
+            rb2.position = new Position(7, 5);
+            board[7][7] = null;
+            board[7][5] = rb2;
+        }
+    }
+
+
     @Override
     public boolean isValidMove(Position newPosition, Piece[][] board) {
         //todo Gabo
@@ -48,7 +86,6 @@ public class King extends Piece{
             return false;
         }
 
-        // check if the destination has already one friendly piece
         boolean friendlyPiece = getIsWhite();
         if (friendlyPiece == getIsWhite()) {
             return false;
