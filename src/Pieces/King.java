@@ -2,16 +2,19 @@ package Pieces;
 
 import Potision.Position;
 
-import java.util.ArrayList;
-
 public class King extends Piece{
 
+    private final static boolean kingWhiteMoved = false;
+    private final static boolean kingBlackMoved = false;
+    private final static boolean rowWhiteOne = false;
+    private final static boolean rowWhiteTwo = false;
+    private final static boolean rowBlackOne = false;
+    private final static boolean rowBlackTwo = false;
     private static final int VALUE = 1000;
 
     public King(boolean isWhite, Position position) {
         super(VALUE, isWhite, position);
     }
-
 
     @Override
     public String getPiece() {
@@ -40,39 +43,188 @@ public class King extends Piece{
         }
     }
 
+    public static Piece kingInCheck(boolean isWhite, Piece[][] board) {
+
+        Piece King = null;
+
+        for (int i = 7; i >= 0; i--) {
+            for (int j = 0; j < 8; j++) {
+                if (board[i][j] != null) {
+                    if (board[i][j].getValue() == 1000 && board[i][j].getIsWhite() == isWhite) {
+                        King = board[i][j];
+                    }
+                }
+            }
+        }
+
+        return King;
+
+    }
+
+    public boolean castling(Position newPosition, Piece[][] board) {
+        if (this.getIsWhite()) {
+
+            if(
+                !(newPosition.getRow() == 0 && newPosition.getCol() == 1) &&
+                !(newPosition.getRow() == 0 && newPosition.getCol() == 6)
+            ) {
+                return false;
+            }
+
+            // need the list of all moves to implement kingInCheck method
+
+            if(newPosition.getRow() == 0 && newPosition.getCol() == 1){
+                if(
+                        board[0][4].getValue() == 1000 && board[0][4].getIsWhite()
+                        && board[0][0].getValue() == 5 && board[0][0].getIsWhite()
+                )
+                {
+                    if(
+                        board[0][1] != null || board[0][2] != null ||
+                        board[0][3] != null
+                    ) {
+                        return false;
+                    }
+                    if(
+                        this.getIsWhite() == board[0][1].getIsWhite() ||
+                        this.getIsWhite() == board[0][2].getIsWhite() ||
+                        this.getIsWhite() == board[0][3].getIsWhite()
+                    ){
+                        return false;
+                    }
+                    if(kingWhiteMoved || rowWhiteOne) {
+                        return false;
+                    }
+                }else{
+                    return false;
+                }
+            }
+
+            if(newPosition.getRow() == 0 && newPosition.getCol() == 6){
+                if(
+                        board[0][4].getValue() == 1000 && board[0][4].getIsWhite()
+                        && board[0][7].getValue() == 5 && board[0][7].getIsWhite()
+                )
+                {
+                    if(
+                        board[0][5] != null ||
+                        board[0][6] != null
+                    ) {
+                        return false;
+                    }
+                    if(
+                        this.getIsWhite() == board[0][5].getIsWhite() ||
+                        this.getIsWhite() == board[0][6].getIsWhite()
+                    ){
+                        return false;
+                    }
+                    if(kingWhiteMoved || rowWhiteTwo) {
+                        return false;
+                    }
+                }else{
+                    return false;
+                }
+            }
+            return true;
+        }
+        else{
+            if(
+                !(newPosition.getRow() == 7 && newPosition.getCol() == 1) &&
+                !(newPosition.getRow() == 7 && newPosition.getCol() == 6)
+            ) {
+                return false;
+            }
+
+            // need the list of all moves to implement kingInCheck method
+
+            if(
+                newPosition.getRow() == 7 &&
+                newPosition.getCol() == 1
+            ){
+                if(
+                    board[7][4].getValue() == 1000 && !board[7][4].getIsWhite()
+                    && board[7][0].getValue() == 5 && !board[7][0].getIsWhite()
+                ){
+
+                    if(board[7][1] != null || board[7][2] != null || board[7][3] != null) {
+                        return false;
+                    }
+                    if(
+                        this.getIsWhite() == board[7][1].getIsWhite() ||
+                        this.getIsWhite() == board[7][2].getIsWhite() ||
+                        this.getIsWhite() == board[7][3].getIsWhite()
+                    ){
+                        return false;
+                    }
+                    if(kingBlackMoved || rowBlackOne) {
+                        return false;
+                    }
+                }else{
+                    return false;
+                }
+            }
+
+            if(newPosition.getRow() == 7 && newPosition.getCol() == 6){
+                if(
+                    board[7][4].getValue() == 1000 && !board[7][4].getIsWhite()
+                    && board[7][7].getValue() == 5 && !board[7][7].getIsWhite()
+                ){
+                    if(
+                        board[7][5] != null ||
+                        board[7][6] != null
+                    ) {
+                        return false;
+                    }
+                    if(
+                        this.getIsWhite() == board[7][5].getIsWhite() ||
+                        this.getIsWhite() == board[7][6].getIsWhite()
+                    ){
+                        return false;
+                    }
+                    if(kingBlackMoved || rowBlackTwo) {
+                        return false;
+                    }
+                }else{
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
     public void intoCastle(Position newPosition, Piece[][] board){
         if(newPosition.getRow() == 0 && newPosition.getCol() == 1) {
             board[this.position.getRow()][this.position.getCol()] = null;
             this.position = newPosition;
             board[newPosition.getRow()][newPosition.getCol()] = this;
-            Piece rw1 = board[0][0];
-            rw1.position = new Position(0, 2);
+            Piece rowWhiteOne = board[0][0];
+            rowWhiteOne.position = new Position(0, 2);
             board[0][0] = null;
-            board[0][2] = rw1;
+            board[0][2] = rowWhiteOne;
         } else if(newPosition.getRow() == 0 && newPosition.getCol() == 6) {
             board[this.position.getRow()][this.position.getCol()] = null;
             this.position = newPosition;
             board[newPosition.getRow()][newPosition.getCol()] = this;
-            Piece rw2 = board[0][7];
-            rw2.position = new Position(0, 5);
+            Piece rowWhiteTwo = board[0][7];
+            rowWhiteTwo.position = new Position(0, 5);
             board[0][7] = null;
-            board[0][5] = rw2;
+            board[0][5] = rowWhiteTwo;
         } else if(newPosition.getRow() == 7 && newPosition.getCol() == 1) {
             board[this.position.getRow()][this.position.getCol()] = null;
             this.position = newPosition;
             board[newPosition.getRow()][newPosition.getCol()] = this;
-            Piece rb1 = board[7][0];
-            rb1.position = new Position(7, 2);
+            Piece rowBackOne = board[7][0];
+            rowBackOne.position = new Position(7, 2);
             board[7][0] = null;
-            board[7][2] = rb1;
+            board[7][2] = rowBackOne;
         } else if(newPosition.getRow() == 7 && newPosition.getCol() == 6) {
             board[this.position.getRow()][this.position.getCol()] = null;
             this.position = newPosition;
             board[newPosition.getRow()][newPosition.getCol()] = this;
-            Piece rb2 = board[7][7];
-            rb2.position = new Position(7, 5);
+            Piece rowBackTwo = board[7][7];
+            rowBackTwo.position = new Position(7, 5);
             board[7][7] = null;
-            board[7][5] = rb2;
+            board[7][5] = rowBackTwo;
         }
     }
 
