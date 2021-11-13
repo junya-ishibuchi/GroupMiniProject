@@ -40,8 +40,6 @@ public class King extends Piece{
         }
     }
 
-
-
     public void intoCastle(Position newPosition, Piece[][] board){
         if(newPosition.getRow() == 0 && newPosition.getCol() == 1) {
             board[this.position.getRow()][this.position.getCol()] = null;

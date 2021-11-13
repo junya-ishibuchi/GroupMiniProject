@@ -14,6 +14,11 @@ public abstract class Piece {
         this.position = position;
     }
 
+    // have to create this empty constructor
+    public Piece() {
+
+    }
+
     public Position getPosition() {
         return position;
     }
