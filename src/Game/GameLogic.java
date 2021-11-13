@@ -7,16 +7,16 @@ import Potision.Uci;
 import java.util.Scanner;
 
 public class GameLogic {
-    private Piece[][] board;
-    private Scanner scanner;
-    private Uci uci;
+    private final Piece[][] board;
+    private final Scanner scanner;
+    private final Uci uci;
     private boolean isGameOver;
     private boolean whiteTurn;
 
     public GameLogic() {
-        Scanner scanner = new Scanner(System.in);
+        this.scanner = new Scanner(System.in);
         this.board = new Piece[8][8];
-        Uci uci = new Uci(8);
+        this.uci = new Uci(8);
         this.init();
     }
 
@@ -80,6 +80,7 @@ public class GameLogic {
     }
 
     private void printTurn() {
+
         System.out.println(whiteTurn ? "White" : "Black" + " to move");
     }
 
@@ -88,22 +89,54 @@ public class GameLogic {
     }
 
     private void printPossibleMove() {
-        //todo: sena
+        for (int row = 7; row >= 0; row--) {
+            for (int column = 0; column < board[row].length; column++) {
+                Piece piece = board[row][column];
+                if (piece != null && piece.getIsWhite() == this.whiteTurn)
+                    printPossibleMove();
+            }
+        }
     }
 
     private void printPossibleMove(String from) {
         //todo: sena
         //from is suppose to be "a4" or "b7". length = 2.
+        // You may use a loop statement like for. And find out where you can go and make the string
+        System.out.println("Possible moves for" );
+
+        System.out.print(" ");
+        for (int row = 7; row >= 0; row--) {
+            for (int column = 0; column < board[row].length; column++) {
+                Position target = new Position(column, row);
+                if () {
+                    System.out.print();
+                }
+            }
+        }
+
     }
+
 
     private void move(String uci) {
         //todo: sena
         //like this
 //        Position from = this.uci.getPositionFromUci(uci.substring(0, 2));
 //        Position to = this.uci.getPositionFromUci(uci.substring(2, 4));
+
+        //Piece targetPiece = board[from.getRow()][from.getCol()];
+//        // Gabo, LOOK AT THE CONDITION.
+//        if (targetPiece.isValidMove(to)) {
+//            board[to.getRow()][to.getCol()] = targetPiece;
+//            targetPiece.setPosition(to);
+//        } else {
+//            System.out.println("Invalid move");
+//        }
+        // You have to consider about white turn or not... plz write the code.
+        // You have to consider about whether the pawn can take the enemy's piece or not... plz write the code.
     }
 
     private void printInvalidInput() {
+
         System.out.println("Invalid input, please try again");
     }
 
