@@ -22,6 +22,10 @@ public class Uci {
         return new Position(rowCol[0], rowCol[1]);
     }
 
+    public String convertToUci(Position position) {
+        return (char)(ALPHABET_A_NUM + position.getCol()) + String.valueOf(position.getRow() + 1);
+    }
+
     private int[] convertToNum(String uci) {
         int row = Character.getNumericValue(uci.charAt(1));
         int col = uci.charAt(0) - ALPHABET_A_NUM;

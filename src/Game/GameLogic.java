@@ -4,6 +4,7 @@ import Pieces.*;
 import Potision.Position;
 import Potision.Uci;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GameLogic {
@@ -132,16 +133,42 @@ public class GameLogic {
     }
 
     private void printPossibleMove() {
-        //todo: sena
-
-        // You can use printPossibleMove method. Check the entire board with a loop statement.
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
+                if (board[i][j] == null || board[i][j].getIsWhite() != isWhiteTurn) {
+                    continue;
+                }
+                printPossibleMove(uci.convertToUci(new Position(i, j)));
+            }
+        }
     }
 
     private void printPossibleMove(String from) {
-        //todo: sena
-        //from is suppose to be "a4" or "b7". length = 2.
+        Position targetPosition = this.uci.getPositionFromUci(from);
+        Piece targetPiece = board[targetPosition.getRow()][targetPosition.getCol()];
 
-        // You may use a loop statement like for. And find out where you can go and make the string.
+        ArrayList<String> possibleMoves = new ArrayList<>();
+
+        System.out.println("Possible moves for " + from + ":");
+        if (targetPiece == null) {
+            System.out.print("{");
+            System.out.print(String.join(", ", possibleMoves));
+            System.out.println("}");
+            return;
+        }
+
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
+                Position checkPosition = new Position(i, j);
+                if (targetPiece.getIsWhite() == isWhiteTurn && targetPiece.isValidMove(checkPosition, board)) {
+                    possibleMoves.add(uci.convertToUci(checkPosition));
+                }
+            }
+        }
+
+        System.out.print("{");
+        System.out.print(String.join(", ", possibleMoves));
+        System.out.println("}");
     }
 
     private boolean move(String uci) {
