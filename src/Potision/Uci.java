@@ -12,20 +12,20 @@ public class Uci {
         if (uci.length() > 2) {
             return false;
         }
-        int[] lineRow = convertToNum(uci);
+        int[] rowCol = convertToNum(uci);
 
-        return lineRow[0] >= 0 && lineRow[1] >=0 && lineRow[0] <= size && lineRow[1] <= size;
+        return rowCol[0] >= 0 && rowCol[1] >=0 && rowCol[0] < size && rowCol[1] < size;
     }
 
     public Position getPositionFromUci(String uci) {
-        int[] lineRow = convertToNum(uci);
-        return new Position(lineRow[0], lineRow[1]);
+        int[] rowCol = convertToNum(uci);
+        return new Position(rowCol[0], rowCol[1]);
     }
 
     private int[] convertToNum(String uci) {
-        int line = uci.charAt(0) - ALPHABET_A_NUM;
         int row = Character.getNumericValue(uci.charAt(1));
+        int col = uci.charAt(0) - ALPHABET_A_NUM;
 
-        return new int[]{line, row};
+        return new int[]{row - 1, col};
     }
 }

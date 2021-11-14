@@ -6,12 +6,12 @@ import Potision.Uci;
 
 import java.util.Scanner;
 
-public class GameLogic{
+public class GameLogic {
     private final Piece[][] board;
     private final Scanner scanner;
     private final Uci uci;
     private boolean isGameOver;
-    private boolean whiteTurn;
+    private boolean isWhiteTurn;
 
     public GameLogic() {
         this.scanner = new Scanner(System.in);
@@ -47,6 +47,7 @@ public class GameLogic{
     }
 
     public void start() {
+        isWhiteTurn = true;
         printBoard();
         while (!isGameOver) {
             String userInput = askWannaDo();
@@ -63,18 +64,19 @@ public class GameLogic{
             } else if (userInput.length() == 2 && uci.validate(userInput)) {
                 printPossibleMove(userInput);
             } else if (userInput.length() == 4 && uci.validate(userInput.substring(0, 2)) && uci.validate(userInput.substring(2, 4))) {
-                move(userInput);
+                if (move(userInput)) {
+                    isWhiteTurn = !isWhiteTurn;
+                }
             } else {
                 printInvalidInput();
             }
-            whiteTurn = !whiteTurn;
         }
     }
 
     private void printResign(){
         int winCount = 0;
         int loseCount = 0;
-        if (whiteTurn) {
+        if (isWhiteTurn) {
             winCount++;
             System.out.println(
                 "Game over - " +
@@ -93,15 +95,13 @@ public class GameLogic{
     }
 
     private void printBoard() {
-        //TODO:
         final String empty = ". ";
         for (int i = 7; i >= 0; i--) {
-            for (int j = 0; j < 8; j++) {
-                if (j == 7) {
+            for (int j = 0; j <= this.board.length; j++) {
+                if (j == 8) {
                     System.out.print(" " + (i + 1));
-                }
-                if (board[i][j] != null) {
-                    System.out.print(board[i][j] + " ");
+                } else if (board[i][j] != null) {
+                    System.out.print(board[i][j].getPiece() + " ");
                 } else {
                     System.out.print(empty);
                 }
@@ -118,14 +118,13 @@ public class GameLogic{
     }
 
     private void printTurn() {
-        System.out.println(whiteTurn ? "White" : "Black" + " to move");
+        System.out.println(isWhiteTurn ? "White" : "Black" + " to move");
     }
 
     private void printHelp() {
-        //TODO:
         System.out.println(
             "* type 'help' for help\n" +
-            "* type 'board' to see the board again\n " +
+            "* type 'board' to see the board again\n" +
             "* type 'resign' to resign\n" +
             "* type 'moves' to list all possible moves\n" +
             "* type a square (e.g. b1, e2) to list possible moves for that square\n" +
@@ -146,20 +145,21 @@ public class GameLogic{
         // You may use a loop statement like for. And find out where you can go and make the string.
     }
 
-    private void move(String uci) {
-        //todo: sena
-        //like this
-//        Position from = this.uci.getPositionFromUci(uci.substring(0, 2));
-//        Position to = this.uci.getPositionFromUci(uci.substring(2, 4));
-//
-//        Piece targetPiece = board[from.getRow()][from.getCol()];
-//        // Gabo, LOOK AT THE CONDITION.
-//        if (targetPiece.isValidMove(to)) {
-//            board[to.getRow()][to.getCol()] = targetPiece;
-//            targetPiece.setPosition(to);
-//        } else {
-//            System.out.println
+    private boolean move(String uci) {
+        Position from = this.uci.getPositionFromUci(uci.substring(0, 2));
+        Position to = this.uci.getPositionFromUci(uci.substring(2, 4));
 
+        Piece targetPiece = board[from.getRow()][from.getCol()];
+        if (targetPiece == null || targetPiece.getIsWhite() != isWhiteTurn) {
+            System.out.println("Invalid move");
+            return false;
+        }
+
+        if (targetPiece.move(to, board)) {
+            printBoard();
+        }
+
+        return true;
         // You have to consider about white turn or not... plz write the code.
         // You have to consider about whether the pawn can take the enemy's piece or not... plz write the code.
     }

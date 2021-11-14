@@ -19,13 +19,13 @@ public class King extends Piece{
     @Override
     public String getPiece() {
         if (getIsWhite()) {
-            return "♔";
+            return "♚";
         }
-        return "♚";
+        return "♔";
     }
 
     @Override
-    boolean move(Position newPosition, Piece[][] board) {
+    public boolean move(Position newPosition, Piece[][] board) {
         int newCol = newPosition.getCol();
         int newRow = newPosition.getRow();
         int col = this.position.getCol();
@@ -232,7 +232,7 @@ public class King extends Piece{
     @Override
     public boolean isValidMove(Position newPosition, Piece[][] board) {
         //todo Gabo
-        if(!super.isValidMove(position)){
+        if(!super.isValidMove(position, board)){
             return false;
         }
 

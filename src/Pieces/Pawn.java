@@ -18,7 +18,7 @@ public class Pawn extends Piece{
 
     // have to create this empty constructor
     public Pawn(boolean isWhite, Position position) {
-        super();
+        super(VALUE, isWhite, position);
     }
 
     public static String getUserInput(String prompt) {
@@ -71,14 +71,14 @@ public class Pawn extends Piece{
     @Override
     public String getPiece() {
         if (getIsWhite()) {
-            return "♙";
+            return "♟";
         }
-        return "♟";
+        return "♙";
     }
 
     // take a look at this method
     @Override
-    boolean move(Position newPosition, Piece[][] board) {
+    public boolean move(Position newPosition, Piece[][] board) {
         int newCol = newPosition.getCol();
         int newRow = newPosition.getRow();
         int col = this.position.getCol();
@@ -117,13 +117,13 @@ public class Pawn extends Piece{
 
         if (p == null) {
             if (this.getIsWhite()) {
-                if (col == newCol && ((newRow == row + moveOne) || (row == 1 && newRow == row + moveTwo)))
+                if (col == newCol && ((newRow == row - moveOne) || (row == 6 && newRow == row - moveTwo)))
                 {
                     return true;
                 }
             }
             else {
-                if (col == newCol && ((newRow == row - moveOne) || (row == 6 && newRow == row - moveTwo)))
+                if (col == newCol && ((newRow == row + moveOne) || (row == 1 && newRow == row + moveTwo)))
                 {
                     return true;
                 }

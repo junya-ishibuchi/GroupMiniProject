@@ -13,13 +13,13 @@ public class Knight extends Piece{
     @Override
     public String getPiece() {
         if (getIsWhite()) {
-            return "♘";
+            return "♞";
         }
-        return "♞";
+        return "♘";
     }
 
     @Override
-    boolean move(Position newPosition, Piece[][] board) {
+    public boolean move(Position newPosition, Piece[][] board) {
         int newCol = newPosition.getCol();
         int newRow = newPosition.getRow();
         int col = this.position.getCol();

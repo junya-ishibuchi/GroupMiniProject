@@ -41,7 +41,7 @@ public abstract class Piece {
 
     public abstract String getPiece();
 
-    abstract boolean move(Position newPosition, Piece[][] board);
+    public abstract boolean move(Position newPosition, Piece[][] board);
 
     public boolean isValidMove(Position newPosition, Piece[][] board){
         if (newPosition.getRow() > 0 && newPosition.getCol() > 0
@@ -51,9 +51,5 @@ public abstract class Piece {
         } else {
             return false;
         }
-    }
-
-    protected boolean isValidMove(Position position) {
-        return false;
     }
 }
