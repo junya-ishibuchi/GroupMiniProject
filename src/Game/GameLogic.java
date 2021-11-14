@@ -4,6 +4,7 @@ import Pieces.*;
 import Potision.Position;
 import Potision.Uci;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class GameLogic {
@@ -142,11 +143,20 @@ public class GameLogic {
         // You can use printPossibleMove method. Check the entire board with a loop statement.
     }
 
-    private void printPossibleMove(String from) {
+    private Integer printPossibleMove(String from) {
         //todo: sena
-        //from is suppose to be "a4" or "b7". length = 2.
+        HashMap<String, Integer> convertToNum = new HashMap<>();
+        convertToNum.put("a", 0);
+        convertToNum.put("b", 1);
+        convertToNum.put("c", 2);
+        convertToNum.put("d", 3);
+        convertToNum.put("e", 4);
+        convertToNum.put("f", 5);
+        convertToNum.put("g", 6);
+        convertToNum.put("h", 7);
 
-        // You may use a loop statement like for. And find out where you can go and make the string.
+        return convertToNum.get(from);
+
     }
 
     private void move(String uci) {
