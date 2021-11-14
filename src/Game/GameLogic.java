@@ -70,8 +70,47 @@ public class GameLogic {
         }
     }
 
-    private void printBoard() {
+    private Piece[][] printBoard() {
         //TODO:
+
+        for (int row = 7; row >= 0; row--) {
+            for (int column = 0; column < board[row].length; column++) {
+                Piece p = null;
+                if (row == 0) {
+                    if (column == 0 || column == 7) {
+                        p = new Rook(true, new Position(column, row));
+                    } else if (column == 1 || column == 6) {
+                        p = new Knight(true, new Position(column, row));
+                    } else if (column == 2 || column == 5) {
+                        p = new Bishop(true, new Position(column, row));
+                    } else if (column == 4) {
+                        p = new Queen(true, new Position(column, row));
+                    } else if (column == 3) {
+                        p = new King(true, new Position(column, row));
+                    }
+                } else if (row == 1) {
+                    p = new Pawn(true, new Position(column, row));
+                } else if (row == 6) {
+                    p = new Pawn(false, new Position(column, row));
+                } else if (row == 7) {
+                    if (column == 0 || column == 7) {
+                        p = new Rook(false, new Position(column, row));
+                    } else if (column == 1 || column == 6) {
+                        p = new Knight(false, new Position(column, row));
+                    } else if (column == 2 || column == 5) {
+                        p = new Bishop(false, new Position(column, row));
+                    } else if (column == 4) {
+                        p = new Queen(false, new Position(column, row));
+                    } else if (column == 3) {
+                        p = new King(false, new Position(column, row));
+                    }
+                }
+                board[row][column] = p;
+                return board;
+            }
+        }
+
+        return new Piece[0][];
     }
 
     private String askWannaDo() {
@@ -81,7 +120,10 @@ public class GameLogic {
     }
 
     private void printTurn() {
-        System.out.println(whiteTurn ? "White" : "Black" + " to move");
+        String userInput = askWannaDo();
+        if (userInput.equals("Turn")) {
+            System.out.println(whiteTurn ? "White" : "Black" + " to move");
+        }
     }
 
     private void printHelp() {
@@ -90,7 +132,13 @@ public class GameLogic {
 
     private void printPossibleMove() {
         //todo: sena
-
+        for (int row = 7; row >= 0; row--) {
+            for (int column = 0; column < board[row].length; column++) {
+                Piece piece = board[row][column];
+                if (piece !=null && piece.getIsWhite() == whiteTurn)
+                    printPossibleMove(piece.getPiece());
+            }
+        }
         // You can use printPossibleMove method. Check the entire board with a loop statement.
     }
 
@@ -103,6 +151,17 @@ public class GameLogic {
 
     private void move(String uci) {
         //todo: sena
+        for (int r = 7; r>= 0; r--) {
+            for (int c = 0; c <= 7; c++) {
+                Position from = this.uci.getPositionFromUci(uci.substring(r,c));
+
+            }
+
+        }
+
+
+        Position to = this.uci.getPositionFromUci(uci.substring(2,4));
+
         //like this
 //        Position from = this.uci.getPositionFromUci(uci.substring(0, 2));
 //        Position to = this.uci.getPositionFromUci(uci.substring(2, 4));
