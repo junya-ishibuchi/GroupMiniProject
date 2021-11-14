@@ -6,7 +6,7 @@ import Potision.Uci;
 
 import java.util.Scanner;
 
-public class GameLogic {
+public class GameLogic{
     private final Piece[][] board;
     private final Scanner scanner;
     private final Uci uci;
@@ -57,6 +57,7 @@ public class GameLogic {
                 printBoard();
             } else if (userInput.equals("resign")) {
                 //TODO:
+                printResign();
             } else if (userInput.equals("moves")) {
                 printPossibleMove();
             } else if (userInput.length() == 2 && uci.validate(userInput)) {
@@ -70,8 +71,44 @@ public class GameLogic {
         }
     }
 
+    private void printResign(){
+        int winCount = 0;
+        int loseCount = 0;
+        if (whiteTurn) {
+            winCount++;
+            System.out.println(
+                "Game over - " +
+                winCount + " - " + loseCount +
+                "White resigned. Black won by resignation"
+            );
+        } else {
+            winCount++;
+            System.out.println(
+                "Game over - " +
+                loseCount + " - " + winCount +
+                "Black resigned. White won by resignation"
+            );
+        }
+        System.exit(0);
+    }
+
     private void printBoard() {
         //TODO:
+        final String empty = ". ";
+        for (int i = 7; i >= 0; i--) {
+            for (int j = 0; j < 8; j++) {
+                if (j == 7) {
+                    System.out.print(" " + (i + 1));
+                }
+                if (board[i][j] != null) {
+                    System.out.print(board[i][j] + " ");
+                } else {
+                    System.out.print(empty);
+                }
+            }
+            System.out.println();
+        }
+        System.out.println("\na b c d e f g h\n");
     }
 
     private String askWannaDo() {
@@ -86,6 +123,14 @@ public class GameLogic {
 
     private void printHelp() {
         //TODO:
+        System.out.println(
+            "* type 'help' for help\n" +
+            "* type 'board' to see the board again\n " +
+            "* type 'resign' to resign\n" +
+            "* type 'moves' to list all possible moves\n" +
+            "* type a square (e.g. b1, e2) to list possible moves for that square\n" +
+            "* type UCI (e.g. b1c3, e7e8) to make a move"
+        );
     }
 
     private void printPossibleMove() {
@@ -113,8 +158,8 @@ public class GameLogic {
 //            board[to.getRow()][to.getCol()] = targetPiece;
 //            targetPiece.setPosition(to);
 //        } else {
-//            System.out.println("Invalid move");
-//        }
+//            System.out.println
+
         // You have to consider about white turn or not... plz write the code.
         // You have to consider about whether the pawn can take the enemy's piece or not... plz write the code.
     }
