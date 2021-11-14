@@ -57,6 +57,9 @@ public class Queen extends Piece{
             {
                 int r = this.position.getRow() + 1;
                 int c = this.position.getCol() + 1;
+                if (crossPosition == 0 && board[r][c] != null && board[r][c].getIsWhite() == getIsWhite()) {
+                    return false;
+                }
                 while(crossPosition > 0) {
                     if(board[r][c] != null) {
                         return false;
@@ -73,6 +76,9 @@ public class Queen extends Piece{
             {
                 int r = this.position.getRow() + 1;
                 int c = this.position.getCol() - 1;
+                if (crossPosition == 0 && board[r][c] != null && board[r][c].getIsWhite() == getIsWhite()) {
+                    return false;
+                }
                 while(crossPosition > 0) {
                     if(board[r][c] != null) {
                         return false;
@@ -89,6 +95,9 @@ public class Queen extends Piece{
             {
                 int r = this.position.getRow() - 1;
                 int c = this.position.getCol() + 1;
+                if (crossPosition == 0 && board[r][c] != null && board[r][c].getIsWhite() == getIsWhite()) {
+                    return false;
+                }
                 while(crossPosition > 0) {
                     if(board[r][c] != null) {
                         return false;
@@ -102,6 +111,9 @@ public class Queen extends Piece{
             }else{
                 int r = newPosition.getRow() + 1;
                 int c = newPosition.getCol() + 1;
+                if (crossPosition == 0 && board[r][c] != null && board[r][c].getIsWhite() == getIsWhite()) {
+                    return false;
+                }
                 while(crossPosition > 0) {
                     if(board[r][c] != null) {
                         return false;
@@ -123,6 +135,12 @@ public class Queen extends Piece{
                 minRow = newPosition.getRow();
                 maxRow = this.position.getRow();
             }
+            if (Math.abs(minRow - maxRow) == 1
+                    && board[newPosition.getRow()][newPosition.getCol()] != null
+                    && board[newPosition.getRow()][newPosition.getCol()].getIsWhite() == getIsWhite()
+            ) {
+                return false;
+            }
             for(int r = minRow + 1; r < maxRow; r++) {
                 if(board[r][this.position.getCol()] != null) {
                     return false;
@@ -139,6 +157,12 @@ public class Queen extends Piece{
             }else{
                 minCol = newPosition.getCol();
                 maxCol = this.position.getCol();
+            }
+            if (Math.abs(minCol - maxCol) == 1
+                    && board[newPosition.getRow()][newPosition.getCol()] != null
+                    && board[newPosition.getRow()][newPosition.getCol()].getIsWhite() == getIsWhite()
+            ) {
+                return false;
             }
             for(int c = minCol + 1; c < maxCol; c++) {
                 if(board[this.position.getRow()][c] != null) {

@@ -236,8 +236,9 @@ public class King extends Piece{
             return false;
         }
 
-        boolean friendlyPiece = getIsWhite();
-        if (friendlyPiece == getIsWhite()) {
+        Piece to = board[newPosition.getRow()][newPosition.getCol()];
+
+        if (to != null && to.getIsWhite() == getIsWhite()) {
             return false;
         }
 

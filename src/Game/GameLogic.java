@@ -10,14 +10,12 @@ public class GameLogic {
     private final Piece[][] board;
     private final Scanner scanner;
     private final Uci uci;
-    private boolean isGameOver;
     private boolean isWhiteTurn;
 
     public GameLogic() {
         this.scanner = new Scanner(System.in);
         this.board = new Piece[8][8];
         this.uci = new Uci(8);
-        this.isGameOver = false;
         this.init();
     }
 
@@ -49,7 +47,8 @@ public class GameLogic {
     public void start() {
         isWhiteTurn = true;
         printBoard();
-        while (!isGameOver) {
+        while (!isGameOver()) {
+            printTurn();
             String userInput = askWannaDo();
 
             if (userInput.equals("help")) {
@@ -57,7 +56,6 @@ public class GameLogic {
             } else if (userInput.equals("board")) {
                 printBoard();
             } else if (userInput.equals("resign")) {
-                //TODO:
                 printResign();
             } else if (userInput.equals("moves")) {
                 printPossibleMove();
@@ -65,6 +63,7 @@ public class GameLogic {
                 printPossibleMove(userInput);
             } else if (userInput.length() == 4 && uci.validate(userInput.substring(0, 2)) && uci.validate(userInput.substring(2, 4))) {
                 if (move(userInput)) {
+                    printBoard();
                     isWhiteTurn = !isWhiteTurn;
                 }
             } else {
@@ -118,7 +117,7 @@ public class GameLogic {
     }
 
     private void printTurn() {
-        System.out.println(isWhiteTurn ? "White" : "Black" + " to move");
+        System.out.println((isWhiteTurn ? "White" : "Black") + " to move");
     }
 
     private void printHelp() {
@@ -155,13 +154,7 @@ public class GameLogic {
             return false;
         }
 
-        if (targetPiece.move(to, board)) {
-            printBoard();
-        }
-
-        return true;
-        // You have to consider about white turn or not... plz write the code.
-        // You have to consider about whether the pawn can take the enemy's piece or not... plz write the code.
+        return targetPiece.move(to, board);
     }
 
     private void printInvalidInput() {
@@ -169,8 +162,22 @@ public class GameLogic {
     }
 
     private boolean isGameOver() {
-        //TODO:
+        int kingCount = 0;
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board.length; j++) {
+                Piece piece = board[i][j];
+                if (piece == null || piece.getValue() != 1000) {
+                    continue;
+                }
+                kingCount++;
+            }
+        }
+
+        if (kingCount != 2) {
+            System.out.println((isWhiteTurn ? "Black" : "White") + " won!");
+            return true;
+        }
+
         return false;
     }
-
 }

@@ -54,6 +54,9 @@ public class Bishop extends Piece{
                 newPosition.getCol() > this.position.getCol()) {
                 int r = this.position.getRow() + 1;
                 int c = this.position.getCol() + 1;
+                if (crossPosition == 0 && board[r][c] != null && board[r][c].getIsWhite() == getIsWhite()) {
+                    return false;
+                }
                 while(crossPosition > 0) {
                     if(board[r][c] != null) {
                         return false;
@@ -70,6 +73,9 @@ public class Bishop extends Piece{
             {
                 int r = this.position.getRow() + 1;
                 int c = this.position.getCol() - 1;
+                if (crossPosition == 0 && board[r][c] != null && board[r][c].getIsWhite() == getIsWhite()) {
+                    return false;
+                }
                 while(crossPosition > 0) {
                     if(board[r][c] != null) {
                         return false;
@@ -86,6 +92,9 @@ public class Bishop extends Piece{
             {
                 int r = this.position.getRow() - 1;
                 int c = this.position.getCol() + 1;
+                if (crossPosition == 0 && board[r][c] != null && board[r][c].getIsWhite() == getIsWhite()) {
+                    return false;
+                }
                 while(crossPosition > 0) {
                     if(board[r][c] != null) {
                         return false;
@@ -100,6 +109,9 @@ public class Bishop extends Piece{
             }else{
                 int r = newPosition.getRow() + 1;
                 int c = newPosition.getCol() + 1;
+                if (crossPosition == 0 && board[r][c] != null && board[r][c].getIsWhite() == getIsWhite()) {
+                    return false;
+                }
                 while(crossPosition > 0) {
                     if(board[r][c] != null) {
                         return false;
