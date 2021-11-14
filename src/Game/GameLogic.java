@@ -97,13 +97,13 @@ public class GameLogic{
         final String empty = ". ";
         for (int i = 7; i >= 0; i--) {
             for (int j = 0; j < 8; j++) {
+                if (j == 7) {
+                    System.out.print(" " + (i + 1));
+                }
                 if (board[i][j] != null) {
                     System.out.print(board[i][j] + " ");
                 } else {
                     System.out.print(empty);
-                }
-                if (j == 7) {
-                    System.out.print(" " + (i + 1));
                 }
             }
             System.out.println();
