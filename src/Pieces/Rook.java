@@ -59,7 +59,7 @@ public class Rook extends Piece{
                     return false;
                 }
             }
-            return true;
+            return board[newPosition.getRow()][newPosition.getCol()] == null || board[newPosition.getRow()][newPosition.getCol()].getIsWhite() != getIsWhite();
         }else if(newPosition.getRow() == this.position.getRow()){
             int minCol = 0;
             int maxCol = 0;
@@ -75,7 +75,7 @@ public class Rook extends Piece{
                     return false;
                 }
             }
-            return true;
+            return board[newPosition.getRow()][newPosition.getCol()] == null || board[newPosition.getRow()][newPosition.getCol()].getIsWhite() != getIsWhite();
         }else{
             return false;
         }
