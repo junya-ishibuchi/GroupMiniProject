@@ -46,6 +46,10 @@ public class Queen extends Piece{
             return false;
         }
 
+        if (position.getRow() == newPosition.getRow() && position.getCol() == newPosition.getCol()) {
+            return false;
+        }
+
         if(
             Math.abs(newPosition.getCol() - this.position.getCol()) ==
             Math.abs(newPosition.getRow() - this.position.getRow())
