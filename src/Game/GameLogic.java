@@ -8,12 +8,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GameLogic {
-    private static Position[] position;
     private final Piece[][] board;
     private final Scanner scanner;
     private final Uci uci;
     private boolean isWhiteTurn;
-    private Object Pawn;
 
     public GameLogic() {
         this.scanner = new Scanner(System.in);
@@ -66,11 +64,9 @@ public class GameLogic {
             } else if (userInput.length() == 4 && uci.validate(userInput.substring(0, 2)) && uci.validate(userInput.substring(2, 4))) {
                 if (move(userInput)) {
                     printBoard();
+                    promotionStatus(userInput);
                     isWhiteTurn = !isWhiteTurn;
                 }
-            }
-            else if(getClass(Pawn)){
-                promotionStatus();
             }
             else if(kingInCheckWhite()){
                 System.out.println((isWhiteTurn ? "Black" : "White") + " King is in check!");
@@ -85,30 +81,20 @@ public class GameLogic {
         }
     }
 
-    private boolean getClass(Object pawn) {
-        return false;
-    }
-
-    public void promotionStatus() {
-        Pawn pawn;
-        for (int col = 0; col < 8; col++) {
-            if (board[0][col] != null) {
-                if (board[0][col].getIsWhite()) {
-                    pawn = (Pawn) board[0][col];
-                    pawn.promoted();
-                    board[0][col] = pawn.newPiece();
-                }
-            }
+    public void promotionStatus(String uci) {
+        Position to = this.uci.getPositionFromUci(uci.substring(2, 4));
+        if (to.getRow() != 0 && to.getRow() != 7) {
+            return;
         }
 
-        for (int col = 0; col < 8; col++) {
-            if (board[7][col] != null) {
-                if (board[7][col].getIsWhite() != isWhiteTurn) {
-                    pawn = (Pawn) board[7][col];
-                    pawn.promoted();
-                    board[7][col] = pawn.newPiece();
-                }
-            }
+        if (isWhiteTurn && to.getRow() != 0 || !isWhiteTurn && to.getRow() != 7) {
+            return;
+        }
+
+        if (board[to.getRow()][to.getCol()].getClass() == Pawn.class) {
+            Pawn pawn = (Pieces.Pawn) board[to.getRow()][to.getCol()];
+            pawn.promoted();
+            board[to.getRow()][to.getCol()] = pawn.newPiece();
         }
     }
 
@@ -182,8 +168,6 @@ public class GameLogic {
     }
 
     private void printPossibleMove(String from) {
-        Position pos = null;
-        King king;
         Position targetPosition = this.uci.getPositionFromUci(from);
         Piece targetPiece = board[targetPosition.getRow()][targetPosition.getCol()];
 
@@ -202,15 +186,6 @@ public class GameLogic {
                 Position checkPosition = new Position(i, j);
                 if (targetPiece.getIsWhite() == isWhiteTurn && targetPiece.isValidMove(checkPosition, board)) {
                     possibleMoves.add(uci.convertToUci(checkPosition));
-                }
-            }
-        }
-
-        for (Position p : position){
-            if (board[pos.getRow()][pos.getCol()].getValue() == 1000) {
-                king = (King) board[pos.getRow()][pos.getCol()];
-                if (king.castling(p, board)) {
-                    possibleMoves.add(p.getPositionFromUci());
                 }
             }
         }

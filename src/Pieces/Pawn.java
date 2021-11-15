@@ -1,6 +1,8 @@
 package Pieces;
 
 import Potision.Position;
+
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Pawn extends Piece{
@@ -36,22 +38,22 @@ public class Pawn extends Piece{
                                 + "'K' -> Knight"
                 );
 
-                if (userOptionInput == "Q" || userOptionInput == "q"){
+                if (Objects.equals(userOptionInput, "Q") || Objects.equals(userOptionInput, "q")){
                     this.newPiece =  new Queen(this.getIsWhite(), this.position);
                     break;
                 }
 
-                else if (userOptionInput == "R" || userOptionInput == "r"){
+                else if (Objects.equals(userOptionInput, "R") || Objects.equals(userOptionInput, "r")){
                     this.newPiece =  new Rook(this.getIsWhite(), this.position);
                     break;
                 }
 
-                else if (userOptionInput == "B" || userOptionInput == "b"){
+                else if (Objects.equals(userOptionInput, "B") || Objects.equals(userOptionInput, "b")){
                     this.newPiece =  new Bishop(this.getIsWhite(), this.position);
                     break;
                 }
 
-                else if (userOptionInput == "K" || userOptionInput == "k"){
+                else if (Objects.equals(userOptionInput, "K") || Objects.equals(userOptionInput, "k")){
                     this.newPiece =  new Knight(this.getIsWhite(), this.position);
                     break;
                 }
