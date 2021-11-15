@@ -37,7 +37,21 @@ public class King extends Piece{
             this.position = newPosition;
             board[newRow][newCol] = this;
             return true;
-        } else {
+        }
+        else if(
+            (newPosition.getRow() == 0 && newPosition.getCol() == 1) ||
+            (newPosition.getRow() == 0 && newPosition.getCol() == 6) ||
+            (newPosition.getRow() == 7 && newPosition.getCol() == 1) ||
+            (newPosition.getRow() == 7 && newPosition.getCol() == 6)
+        ){
+            if(castling(newPosition, board) == true){
+                intoCastle(newPosition, board);
+                return true;
+            } else {
+                return false;
+            }
+        }
+        else {
             System.out.println("Invalid move!");
             System.out.println("King moves only one square in any direction");
             return false;
@@ -104,6 +118,7 @@ public class King extends Piece{
                     return false;
                 }
             }
+
             return true;
         }
         else{
@@ -163,6 +178,7 @@ public class King extends Piece{
                     return false;
                 }
             }
+
             return true;
         }
     }

@@ -118,16 +118,16 @@ public class GameLogic {
         if (isWhiteTurn) {
             winCount++;
             System.out.println(
-                "Game over - " +
-                winCount + " - " + loseCount +
-                "White resigned. Black won by resignation"
+                    "Game over - " +
+                            winCount + " - " + loseCount +
+                            "White resigned. Black won by resignation"
             );
         } else {
             winCount++;
             System.out.println(
-                "Game over - " +
-                loseCount + " - " + winCount +
-                "Black resigned. White won by resignation"
+                    "Game over - " +
+                            loseCount + " - " + winCount +
+                            "Black resigned. White won by resignation"
             );
         }
         System.exit(0);
@@ -161,12 +161,12 @@ public class GameLogic {
 
     private void printHelp() {
         System.out.println(
-            "* type 'help' for help\n" +
-            "* type 'board' to see the board again\n" +
-            "* type 'resign' to resign\n" +
-            "* type 'moves' to list all possible moves\n" +
-            "* type a square (e.g. b1, e2) to list possible moves for that square\n" +
-            "* type UCI (e.g. b1c3, e7e8) to make a move"
+                "* type 'help' for help\n" +
+                        "* type 'board' to see the board again\n" +
+                        "* type 'resign' to resign\n" +
+                        "* type 'moves' to list all possible moves\n" +
+                        "* type a square (e.g. b1, e2) to list possible moves for that square\n" +
+                        "* type UCI (e.g. b1c3, e7e8) to make a move"
         );
     }
 
@@ -214,7 +214,7 @@ public class GameLogic {
                 }
             }
         }
-        
+
         System.out.print("{");
         System.out.print(String.join(", ", possibleMoves));
         System.out.println("}");
@@ -284,5 +284,5 @@ public class GameLogic {
         }
         return true;
     }
-    
+
 }

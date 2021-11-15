@@ -1,10 +1,6 @@
 package Pieces;
 
-import Game.GameLogic;
 import Potision.Position;
-
-import java.awt.*;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Pawn extends Piece{
