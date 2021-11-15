@@ -1,5 +1,6 @@
 package Pieces;
 
+import Game.GameLogic;
 import Potision.Position;
 
 public class King extends Piece{
@@ -36,29 +37,25 @@ public class King extends Piece{
             this.position = newPosition;
             board[newRow][newCol] = this;
             return true;
-        } else {
+        }
+        else if(
+            (newPosition.getRow() == 0 && newPosition.getCol() == 1) ||
+            (newPosition.getRow() == 0 && newPosition.getCol() == 6) ||
+            (newPosition.getRow() == 7 && newPosition.getCol() == 1) ||
+            (newPosition.getRow() == 7 && newPosition.getCol() == 6)
+        ){
+            if(castling(newPosition, board) == true){
+                intoCastle(newPosition, board);
+                return true;
+            } else {
+                return false;
+            }
+        }
+        else {
             System.out.println("Invalid move!");
             System.out.println("King moves only one square in any direction");
             return false;
         }
-    }
-
-    public static Piece kingInCheck(boolean isWhite, Piece[][] board) {
-
-        Piece King = null;
-
-        for (int i = 7; i >= 0; i--) {
-            for (int j = 0; j < 8; j++) {
-                if (board[i][j] != null) {
-                    if (board[i][j].getValue() == 1000 && board[i][j].getIsWhite() == isWhite) {
-                        King = board[i][j];
-                    }
-                }
-            }
-        }
-
-        return King;
-
     }
 
     public boolean castling(Position newPosition, Piece[][] board) {
@@ -70,8 +67,6 @@ public class King extends Piece{
             ) {
                 return false;
             }
-
-            // need the list of all moves to implement kingInCheck method
 
             if(newPosition.getRow() == 0 && newPosition.getCol() == 1){
                 if(
@@ -118,13 +113,12 @@ public class King extends Piece{
                     ){
                         return false;
                     }
-                    if(kingWhiteMoved || rowWhiteTwo) {
-                        return false;
-                    }
+                    return !kingWhiteMoved && !rowWhiteTwo;
                 }else{
                     return false;
                 }
             }
+
             return true;
         }
         else{
@@ -134,8 +128,6 @@ public class King extends Piece{
             ) {
                 return false;
             }
-
-            // need the list of all moves to implement kingInCheck method
 
             if(
                 newPosition.getRow() == 7 &&
@@ -181,13 +173,12 @@ public class King extends Piece{
                     ){
                         return false;
                     }
-                    if(kingBlackMoved || rowBlackTwo) {
-                        return false;
-                    }
+                    return !kingBlackMoved && !rowBlackTwo;
                 }else{
                     return false;
                 }
             }
+
             return true;
         }
     }
@@ -242,13 +233,8 @@ public class King extends Piece{
             return false;
         }
 
-        if(
-            (Math.abs(newPosition.getCol() - this.position.getCol()) <= 1) &&
-            (Math.abs(newPosition.getRow() - this.position.getRow()) <= 1)){
-            return true;
-        }
-
-        return false;
+        return (Math.abs(newPosition.getCol() - this.position.getCol()) <= 1) &&
+                (Math.abs(newPosition.getRow() - this.position.getRow()) <= 1);
 
     }
 

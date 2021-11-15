@@ -2,16 +2,27 @@ package Pieces;
 
 import Potision.Position;
 
+import java.awt.*;
+
 public abstract class Piece {
 
     private int value;
     private boolean isWhite;
     protected Position position;
+    protected Point location;
 
     public Piece(int value, boolean isWhite, Position position) {
         this.value = value;
         this.isWhite = isWhite;
         this.position = position;
+    }
+
+    public Point getLocation() {
+        return location;
+    }
+
+    public void setLocation(Point location) {
+        this.location = location;
     }
 
     // have to create this empty constructor

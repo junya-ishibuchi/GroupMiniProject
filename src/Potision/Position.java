@@ -16,4 +16,8 @@ public class Position {
     public int getCol() {
         return col;
     }
+
+    public String getPositionFromUci() {
+        return null;
+    }
 }
