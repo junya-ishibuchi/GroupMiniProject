@@ -1,5 +1,6 @@
 package Pieces;
 
+import Game.GameLogic;
 import Potision.Position;
 
 public class King extends Piece{
@@ -43,24 +44,6 @@ public class King extends Piece{
         }
     }
 
-    public static Piece kingInCheck(boolean isWhite, Piece[][] board) {
-
-        Piece King = null;
-
-        for (int i = 7; i >= 0; i--) {
-            for (int j = 0; j < 8; j++) {
-                if (board[i][j] != null) {
-                    if (board[i][j].getValue() == 1000 && board[i][j].getIsWhite() == isWhite) {
-                        King = board[i][j];
-                    }
-                }
-            }
-        }
-
-        return King;
-
-    }
-
     public boolean castling(Position newPosition, Piece[][] board) {
         if (this.getIsWhite()) {
 
@@ -70,8 +53,6 @@ public class King extends Piece{
             ) {
                 return false;
             }
-
-            // need the list of all moves to implement kingInCheck method
 
             if(newPosition.getRow() == 0 && newPosition.getCol() == 1){
                 if(
@@ -118,9 +99,7 @@ public class King extends Piece{
                     ){
                         return false;
                     }
-                    if(kingWhiteMoved || rowWhiteTwo) {
-                        return false;
-                    }
+                    return !kingWhiteMoved && !rowWhiteTwo;
                 }else{
                     return false;
                 }
@@ -134,8 +113,6 @@ public class King extends Piece{
             ) {
                 return false;
             }
-
-            // need the list of all moves to implement kingInCheck method
 
             if(
                 newPosition.getRow() == 7 &&
@@ -181,9 +158,7 @@ public class King extends Piece{
                     ){
                         return false;
                     }
-                    if(kingBlackMoved || rowBlackTwo) {
-                        return false;
-                    }
+                    return !kingBlackMoved && !rowBlackTwo;
                 }else{
                     return false;
                 }
@@ -242,13 +217,8 @@ public class King extends Piece{
             return false;
         }
 
-        if(
-            (Math.abs(newPosition.getCol() - this.position.getCol()) <= 1) &&
-            (Math.abs(newPosition.getRow() - this.position.getRow()) <= 1)){
-            return true;
-        }
-
-        return false;
+        return (Math.abs(newPosition.getCol() - this.position.getCol()) <= 1) &&
+                (Math.abs(newPosition.getRow() - this.position.getRow()) <= 1);
 
     }
 

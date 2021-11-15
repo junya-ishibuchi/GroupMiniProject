@@ -1,7 +1,9 @@
 package Pieces;
 
+import Game.GameLogic;
 import Potision.Position;
 
+import java.awt.*;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -100,50 +102,48 @@ public class Pawn extends Piece{
     @Override
     public boolean isValidMove(Position newPosition, Piece[][] board) {
 
-        final int moveOne = 1;
-        final int moveTwo = 2;
-
-        int newCol = newPosition.getCol();
-        int newRow = newPosition.getRow();
         int col = this.position.getCol();
         int row = this.position.getRow();
-        Piece p = board[newRow][newCol];
+        int newCol = newPosition.getCol();
+        int newRow = newPosition.getRow();
+        Piece pawn = board[newRow][newCol];
 
-        if (p != null) {
-            if (p.getIsWhite() == this.getIsWhite()) {
+        if (pawn != null) {
+            if (pawn.getIsWhite() == this.getIsWhite()) {
                 return false;
             }
         }
-
-        if (p == null) {
+        if (pawn == null) {
             if (this.getIsWhite()) {
-                if (col == newCol && ((newRow == row - moveOne) || (row == 6 && newRow == row - moveTwo)))
-                {
-                    return true;
+                // trying to implement en passant
+                if(!getIsWhite()){
+                    return
+                            col == (newCol)  &&
+                            ((row == newRow - 1) || (row == newRow + 1))
+                            ;
+                }else{
+                    return
+                            col == newCol &&
+                            ((newRow == row - 1) ||
+                            (row == 6 && newRow == row - 2))
+                            ;
                 }
             }
             else {
-                if (col == newCol && ((newRow == row + moveOne) || (row == 1 && newRow == row + moveTwo)))
-                {
-                    return true;
-                }
+                return
+                    col == newCol &&
+                    ((newRow == row + 1) ||
+                    (row == 1 && newRow == row + 2))
+                ;
             }
         }
         else {
-
-            boolean b = (newCol == col + moveOne) || (newCol == col - moveOne);
             if (this.getIsWhite()) {
-                if (newRow == row + moveOne && b) {
-                    return true;
-                }
+                return newRow == row + 1;
             }
             else {
-                if (newRow == row - moveOne && b) {
-                    return true;
-                }
+                return newRow == row - 1;
             }
-
         }
-        return false;
     }
 }
