@@ -97,49 +97,51 @@ public class Pawn extends Piece{
 
     @Override
     public boolean isValidMove(Position newPosition, Piece[][] board) {
+        if(!super.isValidMove(position, board)){
+            return false;
+        }
 
-        int col = this.position.getCol();
-        int row = this.position.getRow();
         int newCol = newPosition.getCol();
         int newRow = newPosition.getRow();
-        Piece pawn = board[newRow][newCol];
+        int col = this.position.getCol();
+        int row = this.position.getRow();
+        Piece p = board[newRow][newCol];
 
-        if (pawn != null) {
-            if (pawn.getIsWhite() == this.getIsWhite()) {
+        if (p != null) {
+            if (p.getIsWhite() == this.getIsWhite()) {
                 return false;
             }
         }
-        if (pawn == null) {
+
+        if (p == null) {
             if (this.getIsWhite()) {
-                // trying to implement en passant
-                if(!getIsWhite()){
-                    return
-                            col == (newCol)  &&
-                            ((row == newRow - 1) || (row == newRow + 1))
-                            ;
-                }else{
-                    return
-                            col == newCol &&
-                            ((newRow == row - 1) ||
-                            (row == 6 && newRow == row - 2))
-                            ;
+                if (col == newCol && ((newRow == row - 1) || (row == 6 && newRow == row - 2)))
+                {
+                    return true;
                 }
             }
             else {
-                return
-                    col == newCol &&
-                    ((newRow == row + 1) ||
-                    (row == 1 && newRow == row + 2))
-                ;
+                if (col == newCol && ((newRow == row + 1) || (row == 1 && newRow == row + 2)))
+                {
+                    return true;
+                }
             }
         }
         else {
+
+            boolean b = (newCol == col + 1) || (newCol == col - 1);
             if (this.getIsWhite()) {
-                return newRow == row + 1;
+                if (newRow == row - 1 && b) {
+                    return true;
+                }
             }
             else {
-                return newRow == row - 1;
+                if (newRow == row + 1 && b) {
+                    return true;
+                }
             }
+
         }
+        return false;
     }
 }
