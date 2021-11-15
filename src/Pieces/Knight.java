@@ -49,7 +49,7 @@ public class Knight extends Piece{
             ((Math.abs(newPosition.getRow() - this.position.getRow()) == 1) &&
             (Math.abs(newPosition.getCol() - this.position.getCol()) == 2)))
         {
-            return true;
+            return board[newPosition.getRow()][newPosition.getCol()] == null || board[newPosition.getRow()][newPosition.getCol()].getIsWhite() != getIsWhite();
         }
         else{
             return false;
