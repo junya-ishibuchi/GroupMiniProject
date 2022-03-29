@@ -2,6 +2,9 @@
   <component name="FileTypeManager" version="18">
     <extensionMap>
       <mapping pattern="TodoEnum.yaml" type="AUTO_DETECTED" />
+      <mapping pattern="GenderAggregate" type="YAML" />
+      <mapping pattern="BrandFeedbackGender" type="YAML" />
+      <mapping pattern="BrandFeedbackGenderEnum" type="YAML" />
       <removed_mapping ext="ignore" approved="true" type="IgnoreLang file" />
     </extensionMap>
   </component>
